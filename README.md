@@ -1,10 +1,16 @@
-## Keypad
+## TonerPad
 
-A neat and tidy little four button keypad has come into my possesion. I had two ideas for what to do with it (one practical and one silly); hence, this repository was born. Each project lives in its own branch. This main branch exists merely to introduce the repository and to create some basic building blocks common to both projects.
+What model of toner catridge does your printer take? To answer this question you have to know your printer model, and then you hvae to dig through a manufacturers website trying to find useful information bured amongst popups and marketing materials. Invariably, when you do find the proper toner cartidges, you forget to write this information down; and then you have to repeat the whole process again in seven months when the next toner cartridge reports that it is empty.
 
-![](media/keypad.png)
+You need a **TonerPad** - a dedicated keyboard that will pull up toner info for your color laser printer.
 
-This was a fun little thing to play with, and it brought delight to my week. Hopefully this will bring delight to yours and inspire some creativity and silliness of your own.
+![](media/tonerpad.png)
+
+### Usage
+
+Plug the **TonerPad** into a free USB port on your Mac computer. Press the button corresponding to the color of toner that you need. The product page will open up in your web browser. If you want the high yield toner cartridge, then long press the button (about half a second); you will be taken to the high capacity product page.
+
+That's it! Nothing could be easier!
 
 ### Arduino
 
