@@ -1,15 +1,11 @@
 /*
-Root Ventures Keypad
+TonerPad
 
-This is a basic sketch for capturing keypress events and blinking some leds on
-the board. It is intended as a starting point for building your own projects.
-This sketch ignores the jumpers on the back of the PCB.
-
-Good reference for the codes for various keys:
-https://www.arduino.cc/reference/en/language/functions/usb/keyboard/keyboardmodifiers/
-
-Full list of defined keycodes:
-https://github.com/arduino-libraries/Keyboard/blob/master/src/Keyboard.h
+Have you run out of printer toner? Do you remember the exact model number of
+toner cartidge for your printer? With this sketch you don't have to! Each button
+will take you to the product page for a particular toner color. A long press
+will take you to the high-yield toner page. Just plug the TonerPad into your mac
+computer and never worry about remembering those pesky product details again.
 */
 
 #include <Keyboard.h>
