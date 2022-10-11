@@ -16,12 +16,26 @@ https://github.com/arduino-libraries/Keyboard/blob/master/src/Keyboard.h
 
 #define DEBUG false
 #define MAX_UINT32 4294967295
+#define LONGPRESS 450
 
 #define BUTTON1 6
 #define BUTTON2 7
 #define BUTTON3 8
 #define BUTTON4 9
 
+struct ButtonState {
+  const byte pin;
+  boolean previousState;
+  unsigned long pressedAt;
+  unsigned long releasedAt;
+};
+
+struct ButtonState Buttons[4] = {
+  {BUTTON1, LOW, 0, 0},
+  {BUTTON2, LOW, 0, 0},
+  {BUTTON3, LOW, 0, 0},
+  {BUTTON4, LOW, 0, 0}
+};
 
 void setup() {
   if (DEBUG) {
@@ -44,6 +58,38 @@ void setup() {
 }
 
 void loop() {
-  // put your main code here, to run repeatedly:
+  for (int i = 0; i < 4; i++) {
+    // the buttons are pulled up so they will read 0 when the button is pressed
+    // we invert on read to get a HIGH when pressed
+    boolean currentState = digitalRead(Buttons[i].pin) ? LOW : HIGH;
 
+    // the button is newly pressed - mark the time when this occurred
+    if (currentState && !Buttons[i].previousState) {
+      Buttons[i].pressedAt = millis();
+      
+    // the button is newly released - mark the time when this occurred
+    } else if (!currentState && Buttons[i].previousState) {
+      Buttons[i].releasedAt = millis();
+      handleButtonRelease(&Buttons[i]);      
+    }
+
+    // remember to move the current state to the previous button state
+    Buttons[i].previousState = currentState;
+  }
+
+  delay(25);
+}
+
+void handleButtonRelease(struct ButtonState *button) {
+  // button specific code goes here
+}
+
+void debugButton(struct ButtonState *button) {
+  if (DEBUG) {
+    Serial.print("Button: ");
+    Serial.print(button->pin);            Serial.print(", ");
+    Serial.print(button->previousState);  Serial.print(", ");
+    Serial.print(button->pressedAt);      Serial.print(", ");
+    Serial.print(button->releasedAt);     Serial.print("\n");
+  }
 }
