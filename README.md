@@ -2,6 +2,8 @@
 
 A neat and tidy little four button keypad has come into my possesion. I had two separate ideas for what to do with it (one practical and one silly), and that is how this repository was born. Each project lives in it's own branch. This main branch exists merely to introduce the repository and to create some basic building blocks common to both projects.
 
+![](media/keypad.png)
+
 This was a fun little thing to play with, and it brought delight to my week. Hopefully this will bring delight to yours and inspire some creativity and silliness.
 
 ### Arduino
