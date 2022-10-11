@@ -81,7 +81,29 @@ void loop() {
 }
 
 void handleButtonRelease(struct ButtonState *button) {
-  // button specific code goes here
+  // Figure out how long the button was pressed. With 32 bit unsigned integer
+  // storage, the `millis()` call will rollover after 50 days of runtime.
+  unsigned long duration = 0;
+  if (button->pressedAt <= button->releasedAt) {
+    duration = button->releasedAt - button->pressedAt;
+  } else {
+    duration = button->pressedAt + (MAX_UINT32 - button->releasedAt);
+  }
+
+  switch(button->pin) {
+    case BUTTON1 :
+      debugButton(button);
+      break;
+    case BUTTON2 :
+      debugButton(button);
+      break;
+    case BUTTON3 :
+      debugButton(button);
+      break;
+    case BUTTON4 :
+      debugButton(button);
+      break;
+  }
 }
 
 void debugButton(struct ButtonState *button) {
