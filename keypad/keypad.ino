@@ -99,18 +99,23 @@ void handleButtonRelease(struct ButtonState *button) {
     duration = button->pressedAt + (MAX_UINT32 - button->releasedAt);
   }
 
+  // a longpress will take us to the high yeild toner catridges
   switch(button->pin) {
     case BUTTON1 :
-      Led.blinks += 1;
+      if (duration < LONGPRESS) openUrl("https://www.brother-usa.com/products/tn221c");
+      else                      openUrl("https://www.brother-usa.com/products/tn225c");
       break;
     case BUTTON2 :
-      Led.blinks += 2;
+      if (duration < LONGPRESS) openUrl("https://www.brother-usa.com/products/tn221m");
+      else                      openUrl("https://www.brother-usa.com/products/tn225m");
       break;
     case BUTTON3 :
-      Led.blinks += 3;
+      if (duration < LONGPRESS) openUrl("https://www.brother-usa.com/products/tn221y");
+      else                      openUrl("https://www.brother-usa.com/products/tn225y");
       break;
     case BUTTON4 :
-      Led.blinks += 4;
+      // Brother doesn't produce a high yield black toner cartidge
+      openUrl("https://www.brother-usa.com/products/tn221bk");
       break;
   }
 
@@ -119,6 +124,18 @@ void handleButtonRelease(struct ButtonState *button) {
     Serial.print("Duration: ");
     Serial.print(duration);  Serial.print("\n");
   }
+}
+
+void openUrl(String url) {
+  Keyboard.press(KEY_LEFT_GUI);
+  Keyboard.write(' ');
+  Keyboard.releaseAll();
+  
+  for (int i = 0; i < url.length(); i++) {
+    Keyboard.write(url[i]);
+  }
+
+  Keyboard.write(KEY_RETURN);
 }
 
 void handleBlinks() {
