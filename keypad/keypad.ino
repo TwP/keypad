@@ -37,6 +37,14 @@ struct ButtonState Buttons[4] = {
   {BUTTON4, LOW, 0, 0}
 };
 
+struct LedState {
+  byte blinks;
+  boolean state;
+  unsigned long changedAt;
+};
+
+struct LedState Led = {0, LOW, 0};
+
 void setup() {
   if (DEBUG) {
     Serial.begin(9600);
@@ -77,6 +85,7 @@ void loop() {
     Buttons[i].previousState = currentState;
   }
 
+  handleBlinks();
   delay(25);
 }
 
@@ -92,26 +101,63 @@ void handleButtonRelease(struct ButtonState *button) {
 
   switch(button->pin) {
     case BUTTON1 :
-      debugButton(button);
+      Led.blinks += 1;
       break;
     case BUTTON2 :
-      debugButton(button);
+      Led.blinks += 2;
       break;
     case BUTTON3 :
-      debugButton(button);
+      Led.blinks += 3;
       break;
     case BUTTON4 :
-      debugButton(button);
+      Led.blinks += 4;
       break;
+  }
+
+  if (DEBUG) {
+    debugButton(button);
+    Serial.print("Duration: ");
+    Serial.print(duration);  Serial.print("\n");
+  }
+}
+
+void handleBlinks() {
+  if (Led.blinks > 0) {
+    // Figure out how long the LED has been in its current state taking into account `millis()` rollover.
+    unsigned long now = millis();
+    unsigned long duration = 0;
+    if (now >= Led.changedAt) {
+      duration = now - Led.changedAt;
+    } else {
+      duration = now + (MAX_UINT32 - Led.changedAt);
+    }
+    
+    // when the LED is off, we will turn it on
+    if (Led.state == LOW) {
+      // but only if it has been off for at least 100ms
+      if (duration >= 100) {
+        Led.state = HIGH;
+        Led.changedAt = now;
+        pinMode(17, OUTPUT);
+      }
+
+    // otherwise we will turn the LED off
+    } else {
+      // but only if it has been on for at least 150ms
+      if (duration >= 150) {
+        Led.blinks--;  // we decrement our blinks counter when turning off
+        Led.state = LOW;
+        Led.changedAt = now;
+        pinMode(17, INPUT);
+      }
+    }
   }
 }
 
 void debugButton(struct ButtonState *button) {
-  if (DEBUG) {
-    Serial.print("Button: ");
-    Serial.print(button->pin);            Serial.print(", ");
-    Serial.print(button->previousState);  Serial.print(", ");
-    Serial.print(button->pressedAt);      Serial.print(", ");
-    Serial.print(button->releasedAt);     Serial.print("\n");
-  }
+  Serial.print("Button: ");
+  Serial.print(button->pin);            Serial.print(", ");
+  Serial.print(button->previousState);  Serial.print(", ");
+  Serial.print(button->pressedAt);      Serial.print(", ");
+  Serial.print(button->releasedAt);     Serial.print("\n");
 }
