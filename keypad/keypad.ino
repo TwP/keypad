@@ -1,15 +1,9 @@
 /*
-Root Ventures Keypad
+KeyDeck - A tactile Stream Deck
 
-This is a basic sketch for capturing keypress events and blinking some leds on
-the board. It is intended as a starting point for building your own projects.
-This sketch ignores the jumpers on the back of the PCB.
-
-Good reference for the codes for various keys:
-https://www.arduino.cc/reference/en/language/functions/usb/keyboard/keyboardmodifiers/
-
-Full list of defined keycodes:
-https://github.com/arduino-libraries/Keyboard/blob/master/src/Keyboard.h
+This sketch emits Hammerspoon keystrokes from single keypresses on the keypad.
+The code supports a short press and a long press for each button, so you can
+have up to eight actions accessible.
 */
 
 #include <Keyboard.h>
@@ -101,16 +95,20 @@ void handleButtonRelease(struct ButtonState *button) {
 
   switch(button->pin) {
     case BUTTON1 :
-      Led.blinks += 1;
+      if (duration < LONGPRESS) hammerspoon('1');
+      else                      hammerspoon('5');
       break;
     case BUTTON2 :
-      Led.blinks += 2;
+      if (duration < LONGPRESS) hammerspoon('2');
+      else                      hammerspoon('6');
       break;
     case BUTTON3 :
-      Led.blinks += 3;
+      if (duration < LONGPRESS) hammerspoon('3');
+      else                      hammerspoon('7');
       break;
     case BUTTON4 :
-      Led.blinks += 4;
+      if (duration < LONGPRESS) hammerspoon('4');
+      else                      hammerspoon('8');
       break;
   }
 
@@ -119,6 +117,14 @@ void handleButtonRelease(struct ButtonState *button) {
     Serial.print("Duration: ");
     Serial.print(duration);  Serial.print("\n");
   }
+}
+
+void hammerspoon(char ch) {
+  Keyboard.press(KEY_LEFT_GUI);
+  Keyboard.press(KEY_LEFT_ALT);
+  Keyboard.press(KEY_LEFT_CTRL);
+  Keyboard.press(ch);  
+  Keyboard.releaseAll();
 }
 
 void handleBlinks() {

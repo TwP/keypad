@@ -1,4 +1,4 @@
-## Keypad
+## KeyDeck
 
 A neat and tidy little four button keypad has come into my possesion. I had two ideas for what to do with it (one practical and one silly); hence, this repository was born. Each project lives in its own branch. This main branch exists merely to introduce the repository and to create some basic building blocks common to both projects.
 
