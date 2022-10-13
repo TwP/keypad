@@ -21,7 +21,8 @@ end
 local homeControlToken = readHomeControlToken()
 
 function triggerHomeKitScene(sceneName)
-  local url = "homecontrol://x-callback-url/run-action?action-type=trigger-scene&item-type=scene&item-name=" .. sceneName .. "&home-name=My%20Home&authentication-token=" .. homeControlToken
+  local url = "homecontrol://x-callback-url/run-action?action-type=trigger-scene&item-type=scene&item-name=" .. sceneName ..
+              "&home-name=My%20Home&authentication-token=" .. homeControlToken
   hs.execute("open -g \"" .. url .. "\"")
 end
 
