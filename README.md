@@ -1,6 +1,6 @@
 ## KeyDeck
 
-The [Stream Deck](https://www.elgato.com/en/stream-deck) is a very nice piece of hardware, but what it could really use are some tactile clicky keys. Enter the **KeyDeck** - an Arduino powered mechanical keypad for one button automations on your Mac.
+The Elgato [Stream Deck](https://www.elgato.com/en/stream-deck) is a very nice piece of hardware, but what it could really use are some tactile clicky keys. Enter the **KeyDeck** - an Arduino powered mechanical keypad for one button automations on your Mac.
 
 ![](media/keypad.png)
 
@@ -8,14 +8,22 @@ Each key supports a short press and a long press (about half a second) for a tot
 
 ### How it Works
 
-The Arduino keypad emits key-press events which are received by Hammerspoon running on the Mac. The key-press events are hard coded in the Arduino sketch, and the actions taken are controlled by the Hammerspoon configuration.
+When you press one of the buttons on the keypad, a preconfigured set of keyboard key strokes are sent to the Mac computer. For example, pressing the second button emits the following four key strokes all at once: `⌘`+`⌥`+`⌃`+`2`.
 
-A short press of the first button (the one on the left) emits the following key combination: `⌘ ⌥ ⌃ 1`. The combination of _command_ `⌘` + _option_ `⌥` + _control_ `⌃` is used in the [`hammerspoon/init.lua`](hammerspoon/init.lua) script for dispatching the correct action. The numbers `1` through `8` are used for our eight possible actions. Each button uses it's corresponding number for the short press and then adds four for the long press. For example, the second button uses the number `2` for the short press and the number `6` for the long press.
+Hammerspoon, running on the Mac, receives these key strokes and invokes the corresponding action found in the [`hammerspoon/init.lua`](hammerspoon/init.lua) script. This particular action is found on [line 33](hammerspoon/init.lua#L33) - it activates a HomeKit scene called "Forest".
 
-Hammerspoon is where actions are dispatched based on the key-press. It can launch applications, adjust the volume, rearrange windows on screen - pretty much anything can be automated. Except for HomeKit. Apple (in their infinite wisdom) has not exposed a HomeKit API to MacOS. Another developer out on the internet decided to fix this oversight and so they created "Home Control" - a little menubar app that exposes HomeKit devices. The nice thing about "Home Control" is that it provides an `x-callback-url` scheme. Hammerspoon can create and send these URLs, and therefore, control HomeKit devices. Thank you Pedro José Pereira Vieito.
+Apple (in their infinite wisdom) has not exposed a HomeKit API to MacOS. A developer out on the internet decided to fix this oversight by creating "Home Control", a little menubar app that interfaces with HomeKit devices. The nice thing about "Home Control" is that it provides an `x-callback-url` scheme. Hammerspoon can create and send these URLs, and therefore, control HomeKit devices. Thank you Pedro José Pereira Vieito.
 
-### Arduino
+### Resources
 
-The board on the keypad is an [Arduino pro micro](https://deskthority.net/wiki/Arduino_Pro_Micro) with a micro USB connector and built-in AVR programmer. This means that you can plug the board into your computer, fire up the Arduino IDE, and immediately start uploading sketches to the board.
+The Arduino, Gateron switches, and custom PCB all came from the good folks over at [Root Ventures](https://root.vc). Thank you for this fun little keypad.
 
-The [keypad.ino](keypad/keypad.ino) sketch in this main branch contains the basic building blocks for the two projects.
+Hammerspoon has been automating Mac computers for nearly a decade now. It has a great set of documentation, and there are lots of discussion on the internet about creating useful functions and keybindings.
+
+Home Control is definitely worth the money if you have gone all-in on Apple's HomeKit ecosystem.
+
+Since you can launch any application with a single key press, it might be worth your while investing in some custom keycaps. I've purchased keycaps from [WASD](https://www.wasdkeyboards.com) in the past, and they have been prompt reliable. You can have a [creeper key](https://www.wasdkeyboards.com/creeper-cherry-mx-keycap.html) for launching Minecraft, or a even upload your own [custom art](https://www.wasdkeyboards.com/custom-art-cherry-mx-keycaps.html) to get that true Elgato Stream Deck experience.
+
+The Arduino board is a [pro micro](https://deskthority.net/wiki/Arduino_Pro_Micro) with a micro USB connector and built-in AVR programmer. This means that you can plug the board into your computer, fire up the Arduino IDE, and immediately start uploading sketches to the board.
+
+The [keypad.ino](keypad/keypad.ino) sketch contains the full source code for this project. All the automation is handled by Hammerspoon, so the sketch shouldn't need any changes (unless you want to use a different set of key presses for Hammerspoon).
