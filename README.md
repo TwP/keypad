@@ -18,7 +18,7 @@ Apple (in their infinite wisdom) has not exposed a HomeKit API to MacOS. A devel
 
 The Arduino, Gateron switches, and custom PCB all came from the good folks over at [Root Ventures](https://root.vc). Thank you for this fun little keypad.
 
-Hammerspoon has been automating Mac computers for nearly a decade now. It has a great set of documentation, and there are lots of discussion on the internet about creating useful functions and keybindings.
+Hammerspoon has been automating Mac computers for nearly a decade now. It has a great set of documentation, and there is lots of discussion on the internet about creating useful functions and keybindings.
 
 Home Control is definitely worth the money if you have gone all-in on Apple's HomeKit ecosystem.
 
