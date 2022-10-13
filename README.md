@@ -6,8 +6,15 @@ A neat and tidy little four button keypad has come into my possession. I had two
 
 This was a fun little thing to play with, and it brought delight to my week. Hopefully this will bring delight to yours and inspire some creativity and silliness of your own.
 
-### Arduino
+### Resources
 
-The board on the keypad is an [Arduino pro micro](https://deskthority.net/wiki/Arduino_Pro_Micro) with a micro USB connector and built-in AVR programmer. This means that you can plug the board into your computer, fire up the Arduino IDE, and immediately start uploading sketches to the board.
+The Arduino, Gateron switches, and custom PCB all came from the good folks over at [Root Ventures](https://root.vc). Thank you for this fun little keypad.
+
+The Arduino board is a [pro micro](https://deskthority.net/wiki/Arduino_Pro_Micro) with a micro USB connector and built-in AVR programmer. This means that you can plug the board into your computer, fire up the Arduino IDE, and immediately start uploading sketches to the board.
 
 The [keypad.ino](keypad/keypad.ino) sketch in this main branch contains the basic building blocks for the two projects.
+
+### Projects
+
+* [TonerPad](https://github.com/TwP/keypad/tree/tonerpad) - the easy way to order color laser toner
+* [KeyDeck](https://github.com/TwP/keypad/tree/keydeck) - an ersatz Elgato Stream Deck with clicky-clacky mechanical keys
